@@ -14,6 +14,7 @@ const trunkWidth = rr(5, 6);
 const branchAngle = Math.PI / 4; 
 const maxDepth = 4;
 
+
 function drawBranch(startX, startY, length, angle, depth, width) {
   if (depth > maxDepth) return;
 
@@ -29,6 +30,16 @@ function drawBranch(startX, startY, length, angle, depth, width) {
 
   drawLines([branch]);
 
+  for (let i = 1; i <= 2; i++) {
+    const midX = startX + (length * i / 3) * Math.cos(angle);
+    const midY = startY + (length * i / 3) * Math.sin(angle);
+    const newAngle1 = angle + rr(-branchAngle, branchAngle);
+    const newAngle2 = angle + rr(-branchAngle, branchAngle);
+
+    drawBranch(midX, midY, length * 0.7, newAngle1, depth + 1, width * 0.7);
+    drawBranch(midX, midY, length * 0.7, newAngle2, depth + 1, width * 0.7);
+  }
+
   const newAngle1 = angle - branchAngle + rr(-0.1, 0.1);
   const newAngle2 = angle + branchAngle + rr(-0.1, 0.1);
 
@@ -36,8 +47,8 @@ function drawBranch(startX, startY, length, angle, depth, width) {
   drawBranch(endX, endY, length * 0.7, newAngle2, depth + 1, width * 0.7);
 }
 
-
-drawBranch(100, 150, trunkLength, Math.PI / 2, 0, trunkWidth);
+// Draw the main branch
+drawBranch(100, 150, trunkLength, -Math.PI / 2, 0, trunkWidth);
 
 
 
