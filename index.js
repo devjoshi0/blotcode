@@ -12,8 +12,20 @@ bt.setRandSeed(SEED);
 const trunkLength = rr(30, 40);
 const trunkWidth = rr(5, 6);
 const branchAngle = Math.PI / 4; 
-const maxDepth = 4;
+const maxDepth = 2;
+const blossomDensity = 0.2; // Frequency of blossoms
+const blossomSize = rr(2, 0); // Blossom size
 
+function drawBlossom(x, y) {
+  const blossom = bt.catmullRom([
+    [x, y],
+    [x + blossomSize, y + blossomSize],
+    [x + blossomSize * 2, y],
+    [x + blossomSize, y - blossomSize],
+    [x, y]
+  ], 10);
+  drawLines([blossom]);
+}
 
 function drawBranch(startX, startY, length, angle, depth, width) {
   if (depth > maxDepth) return;
@@ -29,6 +41,10 @@ function drawBranch(startX, startY, length, angle, depth, width) {
   ], 10);
 
   drawLines([branch]);
+
+  if (bt.rand() < blossomDensity) {
+    drawBlossom(endX, endY);
+  }
 
   for (let i = 1; i <= 2; i++) {
     const midX = startX + (length * i / 3) * Math.cos(angle);
@@ -48,8 +64,7 @@ function drawBranch(startX, startY, length, angle, depth, width) {
 }
 
 // Draw the main branch
-drawBranch(100, 150, trunkLength, -Math.PI / 2, 0, trunkWidth);
-
+drawBranch(100, 150, trunkLength, Math.PI / 2, 0, trunkWidth);
 
 
 console.log("SEED:", SEED);
