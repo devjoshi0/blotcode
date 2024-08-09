@@ -1,61 +1,39 @@
-// check out the workshop tab to get started
-// welcome to blot!
-
-// check out this guide to learn how to program in blot
-// https://blot.hackclub.com/editor?guide=start
+const width = 400;
+const height = 400;
 
 
+setDocDimensions(width, height);
 
-const angle = 0
-const size = 100
-const t = new bt.Turtle()
-plant(100,0)
-function plant(size)
-{
-  if(size < 1)
-    return;
-  //trunk
-  t.jump([60, 30])
-  t.setAngle(90)
-  t.right(angle);
-  t.forward(size);
-  //trunk
-  let [x,y] = t.pos;
+const rr = bt.randInRange;
 
-  for (let i = 0; i < 2; i++) {
-    let angle = bt.rand(10, 45);
 
-    t.right(angle);
-    plant(size * bt.rand(0.5, 0.7));
-    
-    
-  }
+// change these parameters
+const trunkHeight = rr(30, 40);
+const trunkWidth = rr(5, 6);
+const branchDensity;
+const leafDensity;
+const trunkRoughness;
+const branchWidthFactor;
 
-  
-  t.down(size);
-  t.left(angle);
+function drawTrunk(){
+  const trunk = [];
+  let x = width / 2;
+  let y = height / 2;
+
+}
+
+
+function drawBranch() {
+  const endX = start
+}
+function drawLeaf(){
   
 }
-drawLines(t.lines())
 
-class 
-// store final lines here
-//const finalLines = [];
 
-// create a polyline
-//const polyline = [
-  //[30, 90],
-  //[100, 90],
-  //[100, 30],
-  //[30, 30],
-  //[30, 90]
-//];
+const [trunkStartX, trunkStartY] = drawTrunk();
 
-// add the polyline to the final lines
-//finalLines.push(polyline);
+drawBranch();
 
-// transform lines using the toolkit
-//bt.rotate(finalLines, 45);
 
-// draw it
-//drawLines(finalLines);
+console.log("SEED:", SEED);
