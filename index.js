@@ -13,12 +13,21 @@ const trunkLength = rr(30, 40);
 const trunkWidth = rr(5, 6);
 const branchAngle = Math.PI / 4; 
 const maxDepth = 4;
+
 function drawBranch(startX, startY, length, angle, depth, width) {
   if (depth > maxDepth) return;
 
   const endX = startX + length * Math.cos(angle);
   const endY = startY + length * Math.sin(angle);
-  drawLines(startX, startY, endX, endY, width);
+
+  const branch = bt.catmullRom([
+    [startX, startY],
+    [startX + length / 3 * Math.cos(angle), startY + length / 3 * Math.sin(angle)],
+    [startX + length * 2 / 3 * Math.cos(angle), startY + length * 2 / 3 * Math.sin(angle)],
+    [endX, endY]
+  ], 10);
+
+  drawLines([branch]);
 
   const newAngle1 = angle - branchAngle + rr(-0.1, 0.1);
   const newAngle2 = angle + branchAngle + rr(-0.1, 0.1);
@@ -28,7 +37,8 @@ function drawBranch(startX, startY, length, angle, depth, width) {
 }
 
 
-drawBranch(100, 150, trunkLength, -Math.PI / 2, 0, trunkWidth);
+drawBranch(100, 150, trunkLength, Math.PI / 2, 0, trunkWidth);
+
 
 
 console.log("SEED:", SEED);
