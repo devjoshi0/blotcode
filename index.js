@@ -1,34 +1,27 @@
-const width = 400;
-const height = 400;
+/* 
+@title: Generative Recursive Blossom Tree Branch
+@author: Dev Joshi
+@snapshot: Snapshot-1.png
+*/
 
-
+const width = 200;
+const height = 200;
 setDocDimensions(width, height);
 
-const rr = bt.randInRange;
 const SEED = Math.floor(Math.random() * 1000000);
 bt.setRandSeed(SEED);
 
-// change these parameters
-const trunkLength = rr(70, 77);
-const trunkWidth = rr(4, 8);
-const branchAngle = Math.PI / 4; 
-const maxDepth = 2;
-const blossomDensity = 0.2; // Frequency of blossoms
-const blossomSize = rr(2, 4);
-const branchFactor = 1.2;
-const branchWidthFactor = 0.2;
+const rr = bt.randInRange;
+const PI = Math.PI;
 
-function drawBlossom(x, y) {
-  const size = rr(blossomSize - 1, blossomSize + 1);
-  const blossom = bt.catmullRom([
-    [x, y],
-    [x + size, y + size],
-    [x + size * 2, y],
-    [x + size, y - size],
-    [x, y]
-  ], 10);
-  drawLines([blossom]);
-}
+const trunkLength = rr(102, 138); 
+const branchFactor = 0.3; 
+const branchAngle = PI / 3.10; 
+const maxDepth = 2; 
+const trunkWidth = rr(5, 20); 
+const branchWidthFactor = 0.2; 
+const blossomDensity = 0.8; 
+const blossomSize = rr(1, 3); 
 
 function drawBranch(startX, startY, length, angle, depth, width) {
   if (depth > maxDepth) return;
@@ -48,8 +41,12 @@ function drawBranch(startX, startY, length, angle, depth, width) {
 
   drawLines([leftSide.concat(rightSide, [leftSide[0]])]);
 
-  if (bt.rand() < blossomDensity) {
-    drawBlossom(endX, endY);
+  for (let i = 0.3; i <= 0.7; i += 0.1) {
+    if (bt.rand() < blossomDensity) {
+      const blossomX = startX + (length * i) * Math.cos(angle);
+      const blossomY = startY + (length * i) * Math.sin(angle);
+      drawBlossom(blossomX, blossomY);
+    }
   }
 
   for (let i = 1; i <= 2; i++) {
@@ -57,18 +54,29 @@ function drawBranch(startX, startY, length, angle, depth, width) {
     const midY = startY + (length * i / 3) * Math.sin(angle);
     const newAngle1 = angle + rr(-branchAngle, branchAngle);
     const newAngle2 = angle + rr(-branchAngle, branchAngle);
-
+    
     drawBranch(midX, midY, length * branchFactor, newAngle1, depth + 1, width * branchWidthFactor);
     drawBranch(midX, midY, length * branchFactor, newAngle2, depth + 1, width * branchWidthFactor);
   }
 
-  const newAngle1 = angle - branchAngle + rr(-0.1, 0.1);
-  const newAngle2 = angle + branchAngle + rr(-0.1, 0.1);
-
-  drawBranch(endX, endY, length * branchFactor, newAngle1, depth + 1, width * branchWidthFactor);
-  drawBranch(endX, endY, length * branchFactor, newAngle2, depth + 1, width * branchWidthFactor);
+  drawBranch(endX, endY, length * branchFactor, angle - branchAngle, depth + 1, width * branchWidthFactor);
+  drawBranch(endX, endY, length * branchFactor, angle + branchAngle, depth + 1, width * branchWidthFactor);
 }
-// Draw the main branch
-drawBranch(100, 150, trunkLength, Math.PI / 2, 0, trunkWidth);
 
-console.log("SEED:", SEED);
+function drawBlossom(x, y) {
+  const petals = 5;
+  const blossom = [];
+  for (let i = 0; i < petals; i++) {
+    const petalAngle = (2 * PI / petals) * i + rr(-PI / 12, PI / 12);
+    const petalX = x + blossomSize * Math.cos(petalAngle);
+    const petalY = y + blossomSize * Math.sin(petalAngle);
+    blossom.push([x, y], [petalX, petalY]);
+  }
+  drawLines([blossom]);
+}
+
+const startX = rr(-12, 0);
+const startY = rr(16, 108);
+drawBranch(startX, startY, trunkLength, rr(-PI / 12, PI / 12), 0, trunkWidth);
+
+console.log("Seed:", SEED);
