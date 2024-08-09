@@ -68,6 +68,7 @@ function drawBranch(startX, startY, length, angle, depth, width) {
   drawBranch(endX, endY, length * branchFactor, newAngle1, depth + 1, width * branchWidthFactor);
   drawBranch(endX, endY, length * branchFactor, newAngle2, depth + 1, width * branchWidthFactor);
 }
+
 // Draw the main branch
 drawBranch(100, 150, trunkLength, Math.PI / 2, 0, trunkWidth);
 
