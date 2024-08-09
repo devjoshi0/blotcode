@@ -1,39 +1,44 @@
-const width = 400;
-const height = 400;
+// check out the workshop tab to get started
+// welcome to blot!
 
-setDocDimensions(width, height);
-
-let lines = [];
-let temp = [];
-let fractalSeed = []
+// check out this guide to learn how to program in blot
+// https://blot.hackclub.com/editor?guide=start
 
 
 
+const angle = 0
+const size = 100
+const t = new bt.Turtle()
+plant(100,0)
+function plant(size)
+{
+  if(size < 1)
+    return;
+  //trunk
+  t.jump([60, 30])
+  t.setAngle(90)
+  t.right(angle);
+  t.forward(size);
+  //trunk
+  let [x,y] = t.pos;
 
-let size = 0
+  for (let i = 0; i < 2; i++) {
+    let angle = bt.rand(10, 45);
 
-let coleaves = 0;
+    t.right(angle);
+    plant(size * bt.rand(0.5, 0.7));
+    
+    
+  }
 
-let branching = 0;
-
-let distribution = 0;
-
-let lengthLimit = 0;
-
-draw()
-function setup() {
-
+  
+  t.down(size);
+  t.left(angle);
+  
 }
-function draw() {
-  const finalLines = [];
-  var trunkLen = 100
-  const trunkLine = [200, height, 200, height - trunkLen]
-  finalLines.push(trunkLine);
-  drawLines(finalLines);
-}
+drawLines(t.lines())
 
-
-
+class 
 // store final lines here
 //const finalLines = [];
 
