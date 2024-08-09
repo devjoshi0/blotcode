@@ -10,18 +10,19 @@ bt.setRandSeed(SEED);
 
 // change these parameters
 const trunkLength = rr(30, 40);
-const trunkWidth = rr(5, 6);
+const trunkWidth = rr(4, 8);
 const branchAngle = Math.PI / 4; 
 const maxDepth = 2;
 const blossomDensity = 0.2; // Frequency of blossoms
-const blossomSize = rr(2, 0); // Blossom size
+const blossomSize = rr(2, 4); // Blossom size
 
 function drawBlossom(x, y) {
+  const size = rr(blossomSize - 1, blossomSize + 1);
   const blossom = bt.catmullRom([
     [x, y],
-    [x + blossomSize, y + blossomSize],
-    [x + blossomSize * 2, y],
-    [x + blossomSize, y - blossomSize],
+    [x + size, y + size],
+    [x + size * 2, y],
+    [x + size, y - size],
     [x, y]
   ], 10);
   drawLines([blossom]);
@@ -40,7 +41,10 @@ function drawBranch(startX, startY, length, angle, depth, width) {
     [endX, endY]
   ], 10);
 
-  drawLines([branch]);
+  const leftSide = branch.map(([x, y]) => [x - width / 2 + rr(-0.2, 0.2), y]);
+  const rightSide = branch.map(([x, y]) => [x + width / 2 + rr(-0.2, 0.2), y]).reverse();
+
+  drawLines([leftSide.concat(rightSide, [leftSide[0]])]);
 
   if (bt.rand() < blossomDensity) {
     drawBlossom(endX, endY);
@@ -65,6 +69,5 @@ function drawBranch(startX, startY, length, angle, depth, width) {
 
 // Draw the main branch
 drawBranch(100, 150, trunkLength, Math.PI / 2, 0, trunkWidth);
-
 
 console.log("SEED:", SEED);
