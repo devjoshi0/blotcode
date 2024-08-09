@@ -9,12 +9,14 @@ const SEED = Math.floor(Math.random() * 1000000);
 bt.setRandSeed(SEED);
 
 // change these parameters
-const trunkLength = rr(30, 40);
+const trunkLength = rr(70, 77);
 const trunkWidth = rr(4, 8);
 const branchAngle = Math.PI / 4; 
 const maxDepth = 2;
 const blossomDensity = 0.2; // Frequency of blossoms
-const blossomSize = rr(2, 4); // Blossom size
+const blossomSize = rr(2, 4);
+const branchFactor = 1.2;
+const branchWidthFactor = 0.2;
 
 function drawBlossom(x, y) {
   const size = rr(blossomSize - 1, blossomSize + 1);
@@ -36,8 +38,8 @@ function drawBranch(startX, startY, length, angle, depth, width) {
 
   const branch = bt.catmullRom([
     [startX, startY],
-    [startX + length / 3 * Math.cos(angle), startY + length / 3 * Math.sin(angle)],
-    [startX + length * 2 / 3 * Math.cos(angle), startY + length * 2 / 3 * Math.sin(angle)],
+    [startX + length / 3 * Math.cos(angle + rr(-0.1, 0.1)), startY + length / 3 * Math.sin(angle + rr(-0.1, 0.1))],
+    [startX + length * 2 / 3 * Math.cos(angle + rr(-0.2, 0.2)), startY + length * 2 / 3 * Math.sin(angle + rr(-0.2, 0.2))],
     [endX, endY]
   ], 10);
 
@@ -56,17 +58,16 @@ function drawBranch(startX, startY, length, angle, depth, width) {
     const newAngle1 = angle + rr(-branchAngle, branchAngle);
     const newAngle2 = angle + rr(-branchAngle, branchAngle);
 
-    drawBranch(midX, midY, length * 0.7, newAngle1, depth + 1, width * 0.7);
-    drawBranch(midX, midY, length * 0.7, newAngle2, depth + 1, width * 0.7);
+    drawBranch(midX, midY, length * branchFactor, newAngle1, depth + 1, width * branchWidthFactor);
+    drawBranch(midX, midY, length * branchFactor, newAngle2, depth + 1, width * branchWidthFactor);
   }
 
   const newAngle1 = angle - branchAngle + rr(-0.1, 0.1);
   const newAngle2 = angle + branchAngle + rr(-0.1, 0.1);
 
-  drawBranch(endX, endY, length * 0.7, newAngle1, depth + 1, width * 0.7);
-  drawBranch(endX, endY, length * 0.7, newAngle2, depth + 1, width * 0.7);
+  drawBranch(endX, endY, length * branchFactor, newAngle1, depth + 1, width * branchWidthFactor);
+  drawBranch(endX, endY, length * branchFactor, newAngle2, depth + 1, width * branchWidthFactor);
 }
-
 // Draw the main branch
 drawBranch(100, 150, trunkLength, Math.PI / 2, 0, trunkWidth);
 
