@@ -1,11 +1,5 @@
-// check out the workshop tab to get started
-// welcome to blot!
-
-// check out this guide to learn how to program in blot
-// https://blot.hackclub.com/editor?guide=start
-
-const width = 450;
-const height = 450;
+const width = 400;
+const height = 400;
 
 setDocDimensions(width, height);
 
@@ -14,39 +8,49 @@ let temp = [];
 let fractalSeed = []
 
 
-class fractalTree {
-  this.size = 0
-  this.coleaves = 0;
-  this.branching = 0;
-  this.distribution = 0;
-  this.lengthLimit = 0;
 
+
+let size = 0
+
+let coleaves = 0;
+
+let branching = 0;
+
+let distribution = 0;
+
+let lengthLimit = 0;
+
+draw()
+function setup() {
 
 }
-
 function draw() {
-
+  const finalLines = [];
+  var trunkLen = 100
+  const trunkLine = [200, height, 200, height - trunkLen]
+  finalLines.push(trunkLine);
+  drawLines(finalLines);
 }
 
 
 
 // store final lines here
-const finalLines = [];
+//const finalLines = [];
 
 // create a polyline
-const polyline = [
-  [30, 90],
-  [100, 90],
-  [100, 30],
-  [30, 30],
-  [30, 90]
-];
+//const polyline = [
+  //[30, 90],
+  //[100, 90],
+  //[100, 30],
+  //[30, 30],
+  //[30, 90]
+//];
 
 // add the polyline to the final lines
-finalLines.push(polyline);
+//finalLines.push(polyline);
 
 // transform lines using the toolkit
-bt.rotate(finalLines, 45);
+//bt.rotate(finalLines, 45);
 
 // draw it
-drawLines(finalLines);
+//drawLines(finalLines);
